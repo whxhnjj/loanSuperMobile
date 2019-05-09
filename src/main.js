@@ -9,6 +9,11 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'swiper/dist/css/swiper.css'
 import './assets/css/reset.css'
 import VueWechatTitle from 'vue-wechat-title'
+// 复制到粘贴板插件
+import VueClipboard from 'vue-clipboard2'
+VueClipboard.config.autoSetContainer = true
+Vue.use(VueClipboard)
+// ---------
 Vue.use(VueWechatTitle)
 Vue.use(VueAwesomeSwiper)
 Vue.use(ElementUI)

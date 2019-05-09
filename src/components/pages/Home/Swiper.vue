@@ -30,7 +30,7 @@ export default {
   computed: {
     swiperOption () {
       return {
-        autoplay: true,
+        autoplay: 3000,
         speed: 1000,
         // pagination: {
         //   el: '.swiper-pagination'

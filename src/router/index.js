@@ -26,6 +26,22 @@ export default new Router({
       }
     },
     {
+      path: '/Content',
+      name: 'Content',
+      component: () => import('../components/pages/Home/Content'),
+      meta: {
+        title: '产品详情'
+      }
+    },
+    {
+      path: '/LoanApply',
+      name: 'LoanApply',
+      component: () => import('../components/pages/Home/LoanApply'),
+      meta: {
+        title: '贷款申请'
+      }
+    },
+    {
       path: '/Borrow',
       name: 'Borrow',
       component: () => import('../components/pages/Borrow/Borrow'),
@@ -39,6 +55,38 @@ export default new Router({
       component: () => import('../components/pages/My/My'),
       meta: {
         title: '我的'
+      }
+    },
+    {
+      path: '/LoanSpeed',
+      name: 'LoanSpeed',
+      component: () => import('../components/pages/My/LoanSpeed'),
+      meta: {
+        title: '贷款进度'
+      }
+    },
+    {
+      path: '/Coupon',
+      name: 'Coupon',
+      component: () => import('../components/pages/My/Coupon'),
+      meta: {
+        title: '优惠券'
+      }
+    },
+    {
+      path: '/InviteGift',
+      name: 'InviteGift',
+      component: () => import('../components/pages/My/InviteGift'),
+      meta: {
+        title: '邀请有礼'
+      }
+    },
+    {
+      path: '/Activity',
+      name: 'Activity',
+      component: () => import('../components/pages/My/Activity'),
+      meta: {
+        title: '活动中心'
       }
     },
     {

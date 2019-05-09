@@ -3,9 +3,9 @@
     <Swiper></Swiper>
     <el-row type="flex" class="row-bg" justify="space-around">
       <el-col :span="5"><div class="Button-bg01" @click="LaCasaRouterTo">房屋贷</div></el-col>
-      <el-col :span="5"><div class="Button-bg02">车抵贷</div></el-col>
-      <el-col :span="5"><div class="Button-bg03">保单贷</div></el-col>
-      <el-col :span="5"><div class="Button-bg04">公积金贷</div></el-col>
+      <el-col :span="5"><div class="Button-bg02" @click="LaCasaRouterTo">车抵贷</div></el-col>
+      <el-col :span="5"><div class="Button-bg03" @click="LaCasaRouterTo">保单贷</div></el-col>
+      <el-col :span="5"><div class="Button-bg04" @click="LaCasaRouterTo">公积金贷</div></el-col>
     </el-row>
     <el-row class="tip-title">
       <el-col :span="22" :offset="1"><img src="../../../assets/image/desd.png" />大额速贷</el-col>

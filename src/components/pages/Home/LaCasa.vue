@@ -12,7 +12,7 @@
           <!--列表开始-->
           <el-row :gutter="20">
             <el-col :span="12">
-              <div class="loanList">
+              <div class="loanList" @click="routerContent">
                 <h4>招联金融<img src="../../../assets/image/hot.png" /></h4>
                 <span><i>3566599</i>人已申请</span>
                 <div class="line-tip"></div>
@@ -23,7 +23,7 @@
               </div>
             </el-col>
             <el-col :span="12">
-              <div class="loanList">
+              <div class="loanList" @click="routerContent">
                 <h4>招联金融<img src="../../../assets/image/hot.png" /></h4>
                 <span><i>3566599</i>人已申请</span>
                 <div class="line-tip"></div>
@@ -34,7 +34,7 @@
               </div>
             </el-col>
             <el-col :span="12">
-              <div class="loanList">
+              <div class="loanList" @click="routerContent">
                 <h4>招联金融<img src="../../../assets/image/hot.png" /></h4>
                 <span><i>3566599</i>人已申请</span>
                 <div class="line-tip"></div>
@@ -45,7 +45,7 @@
               </div>
             </el-col>
             <el-col :span="12">
-              <div class="loanList">
+              <div class="loanList" @click="routerContent">
                 <h4>招联金融<img src="../../../assets/image/hot.png" /></h4>
                 <span><i>3566599</i>人已申请</span>
                 <div class="line-tip"></div>
@@ -81,6 +81,9 @@ export default {
   methods: {
     selected (name) {
       this.active = name
+    },
+    routerContent () {
+      this.$router.push({path: '/Content'})
     }
   }
 }
