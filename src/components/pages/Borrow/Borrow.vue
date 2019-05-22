@@ -149,7 +149,7 @@ export default {
   }
   .Borrow-buzhou{
     width: 100%;
-    height: 162px;
+    height: 125px;
   }
   .Borrow-youshi{
     width: 100%;

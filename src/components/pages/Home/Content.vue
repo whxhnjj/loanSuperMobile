@@ -1,17 +1,17 @@
 <template>
   <div>
     <div class="header">
-      <el-row :gutter="20">
-        <el-col class="header-text" :span="11" :offset="1" align="left">房产贷</el-col>
-        <el-col class="header-text" :span="11" align="right">申请人数：141114</el-col>
+      <el-row>
+        <el-col class="header-text" :span="12" align="left">{{form.productName}}</el-col>
+        <el-col class="header-text" :span="12" align="right">申请人数：{{form.applyForCount}}</el-col>
       </el-row>
       <el-row>
-        <el-col :span="24" class="range">最高范围</el-col>
-        <el-col :span="24" class="header-money">50万</el-col>
+        <el-col class="range">最高范围</el-col>
+        <el-col class="header-money">{{form.lines1}}元</el-col>
       </el-row>
-      <el-row :gutter="20">
-        <el-col class="header-text" :span="11" :offset="1" align="left">审核通过放款</el-col>
-        <el-col class="header-text" :span="11" align="right">月利率：11%</el-col>
+      <el-row>
+        <el-col class="header-text" :span="12" align="left">审核通过放款</el-col>
+        <el-col class="header-text" :span="12" align="right">月利率：{{form.dayInterestRate}}%</el-col>
       </el-row>
     </div>
     <div class="main">
@@ -21,51 +21,37 @@
         <el-col>
           <el-row>
             <el-col class="main-text" :span="5">产品企业：</el-col>
-            <el-col class="main-text" :span="19">满一金有限公司</el-col>
+            <el-col class="main-text" :span="19">{{form.merchantsId}}</el-col>
           </el-row>
           <el-row>
             <el-col class="main-text" :span="5">客户群体：</el-col>
-            <el-col class="main-text" :span="19">有房人士专享，额度高、审批快</el-col>
+            <el-col class="main-text" :span="19">{{form.customerGroup}}</el-col>
           </el-row>
           <el-row>
             <el-col class="main-text" :span="5">可贷额度：</el-col>
-            <el-col class="main-text" :span="19">3-50万<i>(最高可达月供的70倍)</i></el-col>
+            <el-col class="main-text" :span="19">{{form.lines1}}万<i>(最高可达月供的{{form.loanableLinesLabel}}倍)</i></el-col>
           </el-row>
           <el-row>
             <el-col class="main-text" :span="5">可贷期限：</el-col>
-            <el-col class="main-text" :span="19">12/24/36个月</el-col>
+            <el-col class="main-text" :span="19">{{form.loanableTimeLimit}}</el-col>
           </el-row>
         </el-col>
       </el-row>
       <!--申请条件-->
       <el-row class="mgt20">
         <el-col :span="24" class="title">申请条件</el-col>
-        <el-col>
-          <el-row>
-            <el-col class="main-text" :span="5">产品企业：</el-col>
-            <el-col class="main-text" :span="19">满一金有限公司</el-col>
-          </el-row>
-          <el-row>
-            <el-col class="main-text" :span="5">年龄要求：</el-col>
-            <el-col class="main-text" :span="19">25-65岁周岁</el-col>
-          </el-row>
-          <el-row>
-            <el-col class="main-text" :span="3">押品：</el-col>
-            <el-col class="main-text" :span="21">抵押房产为住房抵押总期限为两次以上抵押总期限为两次以上(含普通住房)</el-col>
-          </el-row>
-          <el-row>
-            <el-col class="main-text" :span="3">其他：</el-col>
-            <el-col class="main-text" :span="21">房屋再次抵押，抵押总期限为两次以上，类别为自己的抵押总期限为两次以上抵押总期限为两次以上</el-col>
-          </el-row>
+        <el-col v-for="item in form.productConditions" :key="item.index">
+          <span class="main-text">{{item.name}}：</span>
+          <span class="main-text">{{item.content}}</span>
         </el-col>
       </el-row>
       <!--核算金额-->
       <el-row class="mgt20">
         <el-col :span="24" class="title">核算金额</el-col>
         <el-col>
-          <el-table :data="tableData" border style="width: 100%">
-            <el-table-column prop="date" label="还款时" align="center"></el-table-column>
-            <el-table-column prop="money" label="核算金" align="center"></el-table-column>
+          <el-table :data="form.productInfos" border style="width: 100%">
+            <el-table-column prop="timeFrame" label="还款时" align="center"></el-table-column>
+            <el-table-column prop="accountingAmount" label="核算金" align="center"></el-table-column>
           </el-table>
         </el-col>
       </el-row>
@@ -77,10 +63,13 @@
 </template>
 
 <script>
+import qs from 'qs'
 export default {
   name: 'Content',
   data () {
     return {
+      form: {
+      },
       tableData: [{
         date: '一年以内',
         money: '月供金额X45'
@@ -96,7 +85,25 @@ export default {
       }]
     }
   },
+  created () {
+    this.GetData()
+  },
   methods: {
+    GetData () {
+      this.$axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+      this.$axios.defaults.headers.post['Authorization'] = 'Bearer ' + localStorage.getItem('Token')
+      this.$axios.post(this.GLOBAL.axIosUrl + '/api/H5Product/getProductDetail', qs.stringify({
+        productId: this.$route.query.id
+      }))
+        .then((res) => {
+          res = res.data
+          console.log(res)
+          localStorage.setItem('productType', res.data.productType)
+          this.form = res.data
+        })
+        .catch((res) => {
+        })
+    },
     routerApply () {
       this.$router.push({path: '/LoanApply'})
     }
@@ -105,7 +112,11 @@ export default {
 </script>
 
 <style scoped>
+  body{
+    width: 100%;
+  }
 .header{
+  padding: 0 20px;
   height: 125px;
   background: #ff9930;
 }

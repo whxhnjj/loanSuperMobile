@@ -18,12 +18,25 @@ export default new Router({
       }
     },
     {
+      path: '/SelectionAdd',
+      name: 'SelectionAdd',
+      component: () => import('../components/pages/Home/SelectionAdd'),
+      meta: {
+        title: '城市列表'
+      }
+    },
+    {
+      path: '/Car',
+      name: 'Car',
+      component: () => import('../components/pages/Home/Car'),
+      meta: {
+        title: '选择车系'
+      }
+    },
+    {
       path: '/LaCasa',
       name: 'LaCasa',
-      component: () => import('../components/pages/Home/LaCasa'),
-      meta: {
-        title: '房屋贷'
-      }
+      component: () => import('../components/pages/Home/LaCasa')
     },
     {
       path: '/Content',
@@ -37,6 +50,14 @@ export default new Router({
       path: '/LoanApply',
       name: 'LoanApply',
       component: () => import('../components/pages/Home/LoanApply'),
+      meta: {
+        title: '贷款申请'
+      }
+    },
+    {
+      path: '/LoanInfo',
+      name: 'LoanInfo',
+      component: () => import('../components/pages/Home/LoanInfo'),
       meta: {
         title: '贷款申请'
       }
@@ -87,6 +108,62 @@ export default new Router({
       component: () => import('../components/pages/My/Activity'),
       meta: {
         title: '活动中心'
+      }
+    },
+    {
+      path: '/MyCollection',
+      name: 'MyCollection',
+      component: () => import('../components/pages/My/MyCollection'),
+      meta: {
+        title: '我的收藏'
+      }
+    },
+    {
+      path: '/MyTeam',
+      name: 'MyTeam',
+      component: () => import('../components/pages/My/MyTeam'),
+      meta: {
+        title: '我的团队'
+      }
+    },
+    {
+      path: '/MyMoneybag',
+      name: 'MyMoneybag',
+      component: () => import('../components/pages/My/MyMoneybag'),
+      meta: {
+        title: '我的钱包'
+      }
+    },
+    {
+      path: '/BankCard',
+      name: 'BankCard',
+      component: () => import('../components/pages/My/BankCard'),
+      meta: {
+        title: '银行卡'
+      }
+    },
+    {
+      path: '/AddCard',
+      name: 'AddCard',
+      component: () => import('../components/pages/My/AddCard'),
+      meta: {
+        title: '添加储蓄卡'
+      }
+    },
+    {
+      path: '/Feedback',
+      name: 'Feedback',
+      component: () => import('../components/pages/My/Feedback'),
+      meta: {
+        title: '意见反馈'
+      }
+    },
+    {
+      path: '/Help',
+      name: 'Help',
+      component: () => import('../components/pages/My/Help'),
+      meta: {
+        title: '帮助中心'
       }
     },
     {

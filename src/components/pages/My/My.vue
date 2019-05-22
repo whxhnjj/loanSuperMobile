@@ -90,20 +90,28 @@
          </el-row>
           <el-row class="mgt20" :gutter="20">
             <el-col :span="6">
-              <img src="../../../assets/image/My05.png" />
-              <span>我的客服</span>
+              <div>
+                <img src="../../../assets/image/My05.png" />
+                <span>我的客服</span>
+              </div>
             </el-col>
             <el-col :span="6">
-              <img src="../../../assets/image/My06.png" />
-              <span>我的收藏</span>
+              <div @click="OnMyCollectionRouter">
+                <img src="../../../assets/image/My06.png" />
+                <span>我的收藏</span>
+              </div>
             </el-col>
             <el-col :span="6">
-              <img src="../../../assets/image/My07.png" />
-              <span>我的团队</span>
+              <div @click="OnMyTeamRouter">
+                <img src="../../../assets/image/My07.png" />
+                <span>我的团队</span>
+              </div>
             </el-col>
             <el-col :span="6">
-              <img src="../../../assets/image/My08.png" />
-              <span>我的钱包</span>
+              <div @click="OnMyMoneybagRouter">
+                <img src="../../../assets/image/My08.png" />
+                <span>我的钱包</span>
+              </div>
             </el-col>
           </el-row>
         </el-col>
@@ -112,20 +120,34 @@
     <!--列表栏目-->
     <el-row class="List">
       <el-col class="list-bot">
-        <el-row>
-          <el-col :span="22" :offset="1">
-            <span>帮助中心</span>
-            <img src="../../../assets/image/right.png" />
-          </el-col>
-        </el-row>
+        <div @click="OnBankCardRouter">
+          <el-row>
+            <el-col :span="22" :offset="1">
+              <span>银行卡</span>
+              <img src="../../../assets/image/right.png" />
+            </el-col>
+          </el-row>
+        </div>
       </el-col>
       <el-col class="list-bot">
-        <el-row>
-          <el-col :span="22" :offset="1">
-            <span>意见反馈</span>
-            <img src="../../../assets/image/right.png" />
-          </el-col>
-        </el-row>
+        <div @click="OnHelpRouter">
+          <el-row>
+            <el-col :span="22" :offset="1">
+                <span>帮助中心</span>
+                <img src="../../../assets/image/right.png" />
+            </el-col>
+          </el-row>
+        </div>
+      </el-col>
+      <el-col class="list-bot">
+        <div @click="OnFeedbackRouter">
+          <el-row>
+            <el-col :span="22" :offset="1">
+              <span>意见反馈</span>
+              <img src="../../../assets/image/right.png" />
+            </el-col>
+          </el-row>
+        </div>
       </el-col>
     </el-row>
     <Footer></Footer>
@@ -166,6 +188,30 @@ export default {
     // 活动中心
     OnActivityRouter () {
       this.$router.push({path: '/Activity'})
+    },
+    // 我的收藏
+    OnMyCollectionRouter () {
+      this.$router.push({path: '/MyCollection'})
+    },
+    // 我的团队
+    OnMyTeamRouter () {
+      this.$router.push({path: '/MyTeam'})
+    },
+    // 我的钱包
+    OnMyMoneybagRouter () {
+      this.$router.push({path: '/MyMoneybag'})
+    },
+    // 银行卡列表
+    OnBankCardRouter () {
+      this.$router.push({path: '/BankCard'})
+    },
+    // 意见反馈
+    OnFeedbackRouter () {
+      this.$router.push({path: '/Feedback'})
+    },
+    // 帮助中心
+    OnHelpRouter () {
+      this.$router.push({path: '/Help'})
     }
   }
 }
