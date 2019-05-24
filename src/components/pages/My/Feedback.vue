@@ -19,14 +19,14 @@ export default {
 
 <style scoped>
   .feedback{
-    width: 6.02rem;
+    width:86%;
     height: 3.2rem;
     background: #FFFFFF;
     border-radius: 0.08rem;
     border: 0.01rem solid #BBBBBB;
     display: block;
-    margin: .62rem auto 0;
-    padding: 0.32rem 0.34rem;
+    margin: .62rem 5% 0 5%;
+    padding: 0.32rem 2%;
   }
   input::-webkit-input-placeholder{
     color: #999999;

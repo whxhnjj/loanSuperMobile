@@ -264,7 +264,7 @@ export default {
   },
   created () {
     if (this.IsTypeOpen === '2') {
-      this.form.nameType = localStorage.getItem('Car')
+      this.form.nameType = this.$route.query.audi
     }
     // 时间开始---------
     this.getFullYears()

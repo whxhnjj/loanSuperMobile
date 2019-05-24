@@ -42,4 +42,10 @@ export default {
     line-height: 50px;
     text-align: right;
 }
+.el-collapse-item__header{
+  padding-left: 15px!important;
+}
+.el-collapse-item__content{
+  padding-left: 15px!important;
+}
 </style>

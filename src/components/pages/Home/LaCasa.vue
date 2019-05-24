@@ -114,7 +114,7 @@ export default {
       this.$axios.post(this.GLOBAL.axIosUrl + '/api/H5Product/list', qs.stringify({
         page: page++,
         size: '8',
-        areaCode: localStorage.getItem('city_id'),
+        areaCode: localStorage.getItem('CityCode'),
         productType: this.$route.query.id,
         newLine: this.activeIndex
       }))

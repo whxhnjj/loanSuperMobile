@@ -23,42 +23,12 @@
               </div>
               <div class="list-content">
                 <img src="../../../assets/image/loanlogo.png" />
-                <span class="name01">车抵贷</span>
-                <span class="name02">房产新一代</span>
+                <div class="let-h">
+                  <span class="name01">车抵贷</span>
+                  <span class="name02">房产新一代</span>
+                </div>
                 <span class="name03">￥ 50万</span>
-                <div class="contact">专属客服</div>
-                <div class="cancel">取消申请</div>
-              </div>
-            </div>
-          </el-col>
-          <el-col :span="22" :offset="1">
-            <div class="list-bg">
-              <div class="list-header">
-                <span class="name">贷款企业：西安满一金科技有限公司</span>
-                <span class="status">申请中</span>
-              </div>
-              <div class="list-content">
-                <img src="../../../assets/image/loanlogo.png" />
-                <span class="name01">车抵贷</span>
-                <span class="name02">房产新一代</span>
-                <span class="name03">￥ 50万</span>
-                <div class="contact">专属客服</div>
-                <div class="cancel">取消申请</div>
-              </div>
-            </div>
-          </el-col>
-          <el-col :span="22" :offset="1">
-            <div class="list-bg">
-              <div class="list-header">
-                <span class="name">贷款企业：西安满一金科技有限公司</span>
-                <span class="status">申请中</span>
-              </div>
-              <div class="list-content">
-                <img src="../../../assets/image/loanlogo.png" />
-                <span class="name01">车抵贷</span>
-                <span class="name02">房产新一代</span>
-                <span class="name03">￥ 50万</span>
-                <div class="contact">专属客服</div>
+                <a class="contact" href="tel:15529561660">专属客服</a>
                 <div class="cancel">取消申请</div>
               </div>
             </div>
@@ -72,14 +42,16 @@
             <div class="list-bg">
               <div class="list-header">
                 <span class="name">贷款企业：西安满一金科技有限公司</span>
-                <span class="status">申请成功</span>
+                <span class="status">申请中</span>
               </div>
               <div class="list-content">
                 <img src="../../../assets/image/loanlogo.png" />
-                <span class="name01">车抵贷</span>
-                <span class="name02">房产新一代</span>
+                <div class="let-h">
+                  <span class="name01">车抵贷</span>
+                  <span class="name02">房产新一代</span>
+                </div>
                 <span class="name03">￥ 50万</span>
-                <div class="contact">专属客服</div>
+                <a class="contact" href="tel:15529561660">专属客服</a>
                 <div class="cancel">取消申请</div>
               </div>
             </div>
@@ -88,14 +60,16 @@
             <div class="list-bg">
               <div class="list-header">
                 <span class="name">贷款企业：西安满一金科技有限公司</span>
-                <span class="status">申请失败</span>
+                <span class="status">申请中</span>
               </div>
               <div class="list-content">
                 <img src="../../../assets/image/loanlogo.png" />
-                <span class="name01">车抵贷</span>
-                <span class="name02">房产新一代</span>
+                <div class="let-h">
+                  <span class="name01">车抵贷</span>
+                  <span class="name02">房产新一代</span>
+                </div>
                 <span class="name03">￥ 50万</span>
-                <div class="contact">专属客服</div>
+                <a class="contact" href="tel:15529561660">专属客服</a>
                 <div class="cancel">取消申请</div>
               </div>
             </div>
@@ -187,6 +161,10 @@ export default {
     float: left;
     margin-right: 15px;
   }
+  .let-h{
+    width: calc(100% - 150px);
+    float: left;
+  }
   .list-content .name01{
     height: 33px;
     color: #373737;
@@ -224,7 +202,7 @@ export default {
   .contact{
     width: 70px;
     height: 22px;
-    display: block;
+    display: inline-block;
     background: #ff861d;
     border-radius: 8px;
     color: #FFFFFF;

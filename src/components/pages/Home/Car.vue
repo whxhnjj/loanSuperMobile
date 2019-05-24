@@ -49,7 +49,7 @@ export default {
     clickCity (val) {
       localStorage.setItem('Car', val.name)
       this.title = val.name
-      this.$router.push({path: '/LoanApply'})
+      this.$router.push({path: '/LoanApply', query: {audi: val.name}})
     },
     // ------------------
     init () {
