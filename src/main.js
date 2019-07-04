@@ -13,6 +13,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'swiper/dist/css/swiper.css'
 import './assets/css/reset.css'
 import VueWechatTitle from 'vue-wechat-title'
+import {NumberKeyboard, Field, Toast, Popup, Picker, DatetimePicker} from 'vant'
+
 // 复制到粘贴板插件
 import VueClipboard from 'vue-clipboard2'
 VueClipboard.config.autoSetContainer = true
@@ -21,6 +23,12 @@ Vue.prototype.$axios = axios
 Vue.prototype.GLOBAL = global
 Vue.use(Vuex)
 Vue.use(VueClipboard)
+Vue.use(NumberKeyboard)
+Vue.use(Field)
+Vue.use(Toast)
+Vue.use(Popup)
+Vue.use(Picker)
+Vue.use(DatetimePicker)
 // ---------
 Vue.use(VueWechatTitle)
 Vue.use(VueAwesomeSwiper)

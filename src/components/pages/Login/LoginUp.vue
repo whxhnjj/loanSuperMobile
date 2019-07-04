@@ -1,20 +1,21 @@
 <template>
   <div class="box">
     <div class="main">
-      <h3 class="title">登录</h3>
+      <h3 class="title">注册</h3>
       <p><van-field  class="number" type="text" v-model="valueName" value="" maxlength="11" placeholder="请输入用户名" /></p>
       <p><van-field class="Paswword" readonly clickable :value="value" placeholder="请输入密码" @touchstart.native.stop="show = true" /></p>
-      <button class="button" v-if="elButton"  @click="clicklogin()">登录</button>
-      <button class="button-el" v-else>登录</button>
-      <span class="ahref-login" @click="clickregister()">去注册</span>
+      <button class="button" v-if="elButton"  @click="clicklogin()">注册</button>
+      <button class="button-el" v-else>注册</button>
+      <span class="ahref-login" @click="clickregister()">登录</span>
     </div>
     <van-number-keyboard  @input="onInput" v-model="value" :show="show" :maxlength="12" @blur="show = false" />
   </div>
 </template>
 
 <script>
+import qs from 'qs'
 export default {
-  name: 'Login',
+  name: 'LoginUp',
   data () {
     return {
       valueName: '',
@@ -31,24 +32,18 @@ export default {
         this.elButton = false
       }
     },
-    clickregister () {
-      this.$router.push({path: '/LoginUp'})
-    },
     clicklogin () {
-      this.$axios.defaults.headers.post['Content-Type'] = 'application/json'
+      this.$axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
       // this.$axios.defaults.headers.post['Authorization'] = 'Bearer ' + localStorage.getItem('Token')
-      this.$axios.post(this.GLOBAL.axIosUrl + '/api/auth/mobileLogin', {
+      this.$axios.post(this.GLOBAL.axIosUrl + '/api/auth/mobileRegister', qs.stringify({
         username: this.valueName,
         password: this.value
-      })
+      }))
         .then((res) => {
           res = res.data
           if (res.code === 200) {
-            localStorage.setItem('Token', res.data.token)
-            localStorage.setItem('username', res.data.userDetail.username)
-            localStorage.setItem('userId', res.data.userDetail.id)
             this.$toast.success(res.msg)
-            this.$router.push({path: '/Home'})
+            this.$router.push({path: '/Login'})
           } else {
             this.$toast.fail(res.msg)
           }
@@ -73,50 +68,50 @@ export default {
     text-align: center;
   }
 
-    .main{
-      width: 100%;
-    }
+  .main{
+    width: 100%;
+  }
 
-      .title{
-        text-align: left;
-        padding-top: 1.84rem;
-        font-size: 0.42rem;
-        padding-left: 0.4rem;
-      }
+  .title{
+    text-align: left;
+    padding-top: 1.84rem;
+    font-size: 0.42rem;
+    padding-left: 0.4rem;
+  }
 
-      p
-      {
-        margin-top: .5rem;
-      }
-        .number{
-          width: 86%;
-          padding: .3rem 0 .3rem 0.4rem;
-          border: 1px solid #BBBBBB;
-          outline: none;
-          appearance: none;
-          border-radius: 0.08rem;
-          margin:0 7%;
-          font-size: .36rem;
-        }
-      .Paswword{
-        width: 86%;
-        padding: .3rem 0 .3rem 0.4rem;
-        border: 1px solid #BBBBBB;
-        outline: none;
-        appearance: none;
-        border-radius: 0.08rem;
-        margin:0 7%;
-        font-size: .36rem;
-      }
-      .button{
-        width: 90%;
-        height: 1rem;
-        border-radius: 0.1rem;
-        color: white;
-        font-size: 0.36rem;
-        background: #FF9800;
-        margin-top: 0.72rem;
-      }
+  p
+  {
+    margin-top: .5rem;
+  }
+  .number{
+    width: 86%;
+    padding: .3rem 0 .3rem 0.4rem;
+    border: 1px solid #BBBBBB;
+    outline: none;
+    appearance: none;
+    border-radius: 0.08rem;
+    margin:0 7%;
+    font-size: .36rem;
+  }
+  .Paswword{
+    width: 86%;
+    padding: .3rem 0 .3rem 0.4rem;
+    border: 1px solid #BBBBBB;
+    outline: none;
+    appearance: none;
+    border-radius: 0.08rem;
+    margin:0 7%;
+    font-size: .36rem;
+  }
+  .button{
+    width: 90%;
+    height: 1rem;
+    border-radius: 0.1rem;
+    color: white;
+    font-size: 0.36rem;
+    background: #FF9800;
+    margin-top: 0.72rem;
+  }
   .button-el{
     width: 90%;
     height: 1rem;

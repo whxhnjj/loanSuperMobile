@@ -10,6 +10,22 @@ export default new Router({
       redirect: '/Home'
     },
     {
+      path: '/Login',
+      name: 'Login',
+      component: () => import('../components/pages/Login/Login'),
+      meta: {
+        title: '登录'
+      }
+    },
+    {
+      path: '/LoginUp',
+      name: 'LoginUp',
+      component: () => import('../components/pages/Login/LoginUp'),
+      meta: {
+        title: '注册'
+      }
+    },
+    {
       path: '/Home',
       name: 'Home',
       component: () => import('../components/pages/Home/Home'),
@@ -159,11 +175,27 @@ export default new Router({
       }
     },
     {
+      path: '/SystemFeedback',
+      name: 'SystemFeedback',
+      component: () => import('../components/pages/My/SystemFeedback'),
+      meta: {
+        title: '意见反馈'
+      }
+    },
+    {
       path: '/Help',
       name: 'Help',
       component: () => import('../components/pages/My/Help'),
       meta: {
         title: '帮助中心'
+      }
+    },
+    {
+      path: '/Contact',
+      name: 'Contact',
+      component: () => import('../components/pages/My/Contact'),
+      meta: {
+        title: '联系客服'
       }
     },
     {

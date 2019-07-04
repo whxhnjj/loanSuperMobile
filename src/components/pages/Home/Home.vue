@@ -114,6 +114,7 @@ export default {
     // 城市获取IP
     addcard () {
       this.$axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+      this.$axios.defaults.headers.post['Authorization'] = 'Bearer ' + localStorage.getItem('Token')
       this.$axios.post(this.GLOBAL.axIosUrl + '/api/index/indexPosition', {
       })
         .then((res) => {

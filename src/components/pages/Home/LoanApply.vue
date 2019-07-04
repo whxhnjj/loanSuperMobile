@@ -62,17 +62,7 @@
           <el-row>
             <el-col class="name" :span="6">购房时间:</el-col>
             <el-col class="text" :span="18">
-              <div class="picke-time">
-                <el-select class="year select" v-model="currentDate.year" @change='judgeDay' placeholder="年">
-                  <el-option v-for="item in years" :key="item" :label="item" :value="item"></el-option>
-                </el-select>
-                <el-select class="month select" v-model="currentDate.month" @change='judgeDay' placeholder="月">
-                  <el-option v-for="item in months" :key="item" :label="String(item).length==1?String('0'+item):String(item)" :value="item"></el-option>
-                </el-select>
-                <el-select class="day select" :class="{'error':hasError}" v-model="currentDate.day" placeholder="日">
-                  <el-option v-for="item in days" :key="item" :label="String(item).length==1?String('0'+item):String(item)" :value="item"></el-option>
-                </el-select>
-              </div>
+              <div class="picke-time" @click="TimeClickOn(1)">{{resDate1}}</div>
             </el-col>
           </el-row>
         </div>
@@ -83,7 +73,7 @@
           <el-row>
             <el-col class="name" :span="6">车辆名称:</el-col>
             <el-col class="text" :span="18">
-              <div class="Carpop" @click="Carpop">{{form.nameType}}</div>
+              <div class="Carpop" @click="Carpopclick">{{form.nameType}}</div>
             </el-col>
           </el-row>
         </div>
@@ -91,23 +81,7 @@
           <el-row>
             <el-col class="name" :span="6">购车时间:</el-col>
             <el-col class="text" :span="18">
-              <el-row :gutter="5" class="picke-time">
-                <el-col :span="8">
-                  <el-select class="year select" v-model="currentDate.year" @change='judgeDay' placeholder="年">
-                    <el-option v-for="item in years" :key="item" :label="item" :value="item"></el-option>
-                  </el-select>
-                </el-col>
-                <el-col :span="8">
-                  <el-select class="month select" v-model="currentDate.month" @change='judgeDay' placeholder="月">
-                    <el-option v-for="item in months" :key="item" :label="String(item).length==1?String('0'+item):String(item)" :value="item"></el-option>
-                  </el-select>
-                </el-col>
-                <el-col :span="8">
-                  <el-select class="day select" :class="{'error':hasError}" v-model="currentDate.day" placeholder="日">
-                    <el-option v-for="item in days" :key="item" :label="String(item).length==1?String('0'+item):String(item)" :value="item"></el-option>
-                  </el-select>
-                </el-col>
-              </el-row>
+              <div class="picke-time" @click="TimeClickOn(2)">{{resDate2}}</div>
             </el-col>
           </el-row>
         </div>
@@ -161,25 +135,28 @@
       </div>
       <div class="list">
         <el-col class="name" :span="6">手机号:</el-col>
-        <el-col class="text" :span="11">
-          <input type="text" v-model="form.mobile" placeholder="" />
+        <el-col class="text" :span="18">
+          <input type="text" v-model="form.mobile" placeholder="请输入手机" />
         </el-col>
-        <el-col class="text" :span="7">
-          <i v-show="sendAuthCode" @click="getAuthCode">获取验证码</i>
-          <i class="code-text" v-show="!sendAuthCode">重新发送<b>({{code_num}}s)</b></i>
-        </el-col>
+        <!--<el-col class="text" :span="7">-->
+          <!--<i v-show="sendAuthCode" @click="getAuthCode">获取验证码</i>-->
+          <!--<i class="code-text" v-show="!sendAuthCode">重新发送<b>({{code_num}}s)</b></i>-->
+        <!--</el-col>-->
       </div>
-      <div class="list">
-        <el-row>
-          <el-col class="name" :span="6">验证码:</el-col>
-          <el-col class="text" :span="18">
-            <input type="text" v-model="form.code" placeholder="请输入验证码" />
-          </el-col>
-        </el-row>
-      </div>
+      <!--<div class="list">-->
+        <!--<el-row>-->
+          <!--<el-col class="name" :span="6">验证码:</el-col>-->
+          <!--<el-col class="text" :span="18">-->
+            <!--<input type="text" v-model="form.code" placeholder="请输入验证码" />-->
+          <!--</el-col>-->
+        <!--</el-row>-->
+      <!--</div>-->
       <!--结束-->
     </div>
     <div class="button" @click="SubmitInfo">提交</div>
+    <van-popup v-model="TimePopShow"  position="bottom">
+      <van-datetime-picker v-model="currentDate" type="date" @confirm="confirm" @cancel="cancel" />
+    </van-popup>
   </div>
 </template>
 
@@ -198,13 +175,13 @@ export default {
   },
   data () {
     return {
+      TimeNum: '',
+      TimePopShow: false,
+      currentDate: new Date(),
+      resDate1: '', // 购房时间
+      resDate2: '', // 购车时间
       // 时间
       TimeVal: '',
-      currentDate: {
-        year: '',
-        month: '',
-        day: ''
-      },
       maxYear: new Date().getFullYear(),
       minYear: 1980,
       years: [],
@@ -236,30 +213,30 @@ export default {
     }
   },
   watch: {
-    // 时间------
-    sourceDate () {
-      if (this.sourceDate) {
-        this.currentDate = this.timestampToTime(this.sourceDate)
-      }
-    },
-    normalMaxDays () {
-      this.getFullDays()
-      if (this.currentDate.year && this.currentDate.day > this.normalMaxDays) {
-        this.currentDate.day = ''
-      }
-    },
-    currentDate: {
-      handler (newValue, oldValue) {
-        this.judgeDay()
-        if (newValue.year && newValue.month && newValue.day) {
-          this.hasError = false
-        } else {
-          this.hasError = true
-        }
-        this.emitDate()
-      },
-      deep: true
-    }
+    // // 时间------
+    // sourceDate () {
+    //   if (this.sourceDate) {
+    //     this.currentDate = this.timestampToTime(this.sourceDate)
+    //   }
+    // },
+    // normalMaxDays () {
+    //   this.getFullDays()
+    //   if (this.currentDate.year && this.currentDate.day > this.normalMaxDays) {
+    //     this.currentDate.day = ''
+    //   }
+    // },
+    // currentDate: {
+    //   handler (newValue, oldValue) {
+    //     this.judgeDay()
+    //     if (newValue.year && newValue.month && newValue.day) {
+    //       this.hasError = false
+    //     } else {
+    //       this.hasError = true
+    //     }
+    //     this.emitDate()
+    //   },
+    //   deep: true
+    // }
   //  ------时间结束--------
   },
   created () {
@@ -272,20 +249,55 @@ export default {
     //  ------时间结束--------
   },
   methods: {
+    TimeClickOn (val) {
+      this.TimePopShow = true
+      this.TimeNum = val
+    },
+    confirm (value) {
+      const d = new Date(value)
+      if (this.TimeNum === 1) {
+        this.resDate1 = d.getFullYear() + '-' + this.p((d.getMonth() + 1)) + '-' + this.p(d.getDate())
+      }
+      if (this.TimeNum === 2) {
+        this.resDate2 = d.getFullYear() + '-' + this.p((d.getMonth() + 1)) + '-' + this.p(d.getDate())
+      }
+      this.TimePopShow = false
+    },
+    p (s) {
+      return s < 10 ? '0' + s : s
+    },
+    cancel () {
+      this.TimePopShow = false
+    },
     // 车辆跳转
-    Carpop () {
+    Carpopclick () {
       this.$router.push({path: '/Car'})
     },
     // 提交表单数据
     SubmitInfo () {
+      if (!this.livingProvince) {
+        this.$toast.fail('请选择城市')
+        return
+      }
+      if (!this.form.name) {
+        this.$toast.fail('请填写姓名')
+        return
+      }
+      if (!this.form.amount) {
+        this.$toast.fail('请填写贷款金额')
+        return
+      }
+      if (!this.form.mobile) {
+        this.$toast.fail('请填写手机')
+        return
+      }
       if (this.IsTypeOpen === '1' && this.IsTypeOpen === '2') {
-        if (this.currentDate.month < 10) {
-          this.currentDate.month = '0' + this.currentDate.month
+        if (this.TimeNum === 1) {
+          this.TimeVal = this.resDate1
         }
-        if (this.currentDate.day < 10) {
-          this.currentDate.day = '0' + this.currentDate.day
+        if (this.TimeNum === 2) {
+          this.TimeVal = this.resDate2
         }
-        this.TimeVal = this.currentDate.year + '-' + this.currentDate.month + '-' + this.currentDate.day
       }
       if (this.IsTypeOpen === '3') {
         this.TimeVal = this.form.payment1
@@ -297,7 +309,7 @@ export default {
       this.$axios.defaults.headers.post['Authorization'] = 'Bearer ' + localStorage.getItem('Token')
       this.$axios.post(this.GLOBAL.axIosUrl + '/api/H5Order/addOrders', qs.stringify({
         productId: localStorage.getItem('productId'),
-        userId: '1233', // 写死的用户ID
+        userId: localStorage.getItem('userId'), // 写死的用户ID
         city: this.livingProvince + this.livingCity + this.livingDistrict,
         customer: this.form.name,
         mobile: this.form.mobile,
@@ -459,6 +471,13 @@ export default {
     overflow: hidden;
     background: #FFFFFF;
   }
+  .picke-time{
+    width: 100%;
+    height: 40px;
+    text-align: right;
+    line-height: 40px;
+    padding-right: 40px;
+  }
   .list{
     height: 40px;
     padding: 0 10px;
@@ -480,7 +499,6 @@ export default {
     text-align: right;
     line-height:38px;
     height:38px;
-    padding-right: 20px;
   }
   .list input::-webkit-input-placeholder {
     color: #999999;
@@ -527,6 +545,9 @@ export default {
   /*车辆*/
   .Carpop{
     text-align: right;
+    width: 100%;
+    display: block;
+    height: 40px;
     line-height: 40px;
     padding-right: 25px;
     background: #fff url(../../../assets/image/borrow-jiantou.png) no-repeat right center;

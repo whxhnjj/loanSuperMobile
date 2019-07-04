@@ -1,18 +1,37 @@
 <template>
   <div>
-    <textarea class="feedback" placeholder="请留下您的意见反馈！"></textarea>
-    <button class="feedback-submit">提交</button>
+    <textarea class="feedback" v-model="feedbackContent" placeholder="请留下您的意见反馈！"></textarea>
+    <button class="feedback-submit" @click="FeedbackSubmit">提交</button>
   </div>
 </template>
 
 <script>
+import qs from 'qs'
 export default {
   name: 'Feedback',
   data () {
     return {
+      feedbackContent: ''
     }
   },
   methods: {
+    FeedbackSubmit () {
+      this.$axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+      this.$axios.defaults.headers.post['Authorization'] = 'Bearer ' + localStorage.getItem('Token')
+      this.$axios.post(this.GLOBAL.axIosUrl + '/api/addFeedback', qs.stringify({
+        content: this.feedbackContent
+      }))
+        .then((res) => {
+          res = res.data
+          if (res.code === 200) {
+            this.$toast.success('提交成功')
+          } else {
+            this.$toast.fail(res.msg)
+          }
+        })
+        .catch((res) => {
+        })
+    }
   }
 }
 </script>

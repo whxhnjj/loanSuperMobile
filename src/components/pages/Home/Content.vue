@@ -59,6 +59,7 @@
         <el-col :span="8" :offset="8"><button class="button" @click="routerApply">下一步</button></el-col>
       </el-row>
     </div>
+    <div class="footfixed" @click="CollectionUp">我要收藏</div>
   </div>
 </template>
 
@@ -89,6 +90,24 @@ export default {
     this.GetData()
   },
   methods: {
+    // 收藏
+    CollectionUp () {
+      this.$axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+      this.$axios.defaults.headers.post['Authorization'] = 'Bearer ' + localStorage.getItem('Token')
+      this.$axios.post(this.GLOBAL.axIosUrl + '/api/Collection/addCollection', qs.stringify({
+        productId: this.$route.query.id
+      }))
+        .then((res) => {
+          res = res.data
+          if (res.code === 200) {
+            this.$toast.success('收藏成功')
+          } else {
+            this.$toast.fail(res.msg)
+          }
+        })
+        .catch((res) => {
+        })
+    },
     GetData () {
       this.$axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
       this.$axios.defaults.headers.post['Authorization'] = 'Bearer ' + localStorage.getItem('Token')
@@ -97,9 +116,14 @@ export default {
       }))
         .then((res) => {
           res = res.data
-          console.log(res)
-          localStorage.setItem('productType', res.data.productType)
-          this.form = res.data
+          if (res.code === 200) {
+            localStorage.setItem('productType', res.data.productType)
+            this.form = res.data
+          } else if (res.code === 401) {
+            this.$router.push({path: '/Login'})
+          } else {
+            this.$toast.success(res.msg)
+          }
         })
         .catch((res) => {
         })
@@ -167,5 +191,18 @@ export default {
     margin: 30px 0 20px 0;
     padding: 5px 0;
     background: linear-gradient(310deg,rgba(254,149,40,1) 0%,rgba(253,110,5,1) 100%);
+  }
+  .footfixed{
+    height: 40px;
+    text-align: center;
+    width: 100%;
+    background: #ff9930 url("../../../assets/image/shoucang.png") no-repeat left 35% center;
+    background-size: 20px;
+    position: fixed;
+    bottom:0;
+    left: 0;
+    color: #FFF;
+    line-height: 40px;
+    z-index: 9999999999;
   }
 </style>

@@ -1,37 +1,104 @@
 <template>
   <div>
     <!--列表开始-->
-    <el-col :span="22" :offset="1">
+    <el-col :span="22" :offset="1" v-for="item in main" :key="item.index">
       <div class="list-bg">
         <div class="list-header">
-          <span class="name">贷款企业：西安满一金科技有限公司</span>
-          <span class="status">申请成功</span>
+          <span class="name">贷款企业：{{item.merchantsName}}</span>
+          <!--<span class="status">申请成功</span>-->
         </div>
         <div class="list-content">
           <img src="../../../assets/image/loanlogo.png" />
-          <span class="name01">车抵贷</span>
-          <span class="name02">房产新一代</span>
-          <span class="name03">￥ 50万</span>
-          <div class="cancel">取消收藏</div>
+          <span class="name01">{{item.productType}}</span>
+          <span class="name02">{{item.productName}}</span>
+          <span class="name03">￥ {{item.lines1}}万</span>
+          <div style="width: 60%;float: right;">
+            <div class="cancel" @click="CancelCall(item.id)">取消收藏</div>
+          </div>
         </div>
       </div>
     </el-col>
+    <div class="con-bg-img" v-if="main.length === 0">暂无收藏</div>
   </div>
 </template>
 
 <script>
+import qs from 'qs'
 export default {
-  name: 'MyCollection'
+  name: 'MyCollection',
+  data () {
+    return {
+      main: []
+    }
+  },
+  created () {
+    this.GetLoanList()
+  },
+  methods: {
+    GetLoanList () {
+      this.$axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+      this.$axios.defaults.headers.post['Authorization'] = 'Bearer ' + localStorage.getItem('Token')
+      this.$axios.post(this.GLOBAL.axIosUrl + '/api/Collection/findMyCollection', qs.stringify({
+        page: '1',
+        size: '300'
+      }))
+        .then((res) => {
+          res = res.data
+          if (res.code === 200) {
+            this.main = res.data.records
+          } else if (res.code === 401) {
+            this.$router.push({path: '/Login'})
+          } else {
+            this.$toast.fail(res.msg)
+          }
+        })
+        .catch((res) => {
+          console.log(res)
+        })
+    },
+    // 取消收藏
+    CancelCall (id) {
+      this.$axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+      this.$axios.defaults.headers.post['Authorization'] = 'Bearer ' + localStorage.getItem('Token')
+      this.$axios.post(this.GLOBAL.axIosUrl + '/api/Collection/delCollection', qs.stringify({
+        id: id
+      }))
+        .then((res) => {
+          res = res.data
+          if (res.code === 200) {
+            this.GetLoanList()
+            this.$toast.success('成功')
+          } else {
+            this.$toast.fail(res.msg)
+          }
+        })
+        .catch((res) => {
+        })
+    }
+  }
 }
 </script>
 
 <style scoped>
+  .con-bg-img{
+    font-size: 26px;
+    color: #DDD;
+    text-align: center;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -25px;
+  }
   .list-bg{
     border-radius: 8px;
     height: 100%;
     overflow: hidden;
     margin-bottom: 10px;
     background: #ffffff;
+    margin-top: 15px;
   }
   .list-header{
     height: 30px;
